@@ -12,15 +12,15 @@ def minOperations(n: int) -> int:
     Returns:
         number of operations
 
-    # base case
-    # variable to keep track of total number of operations
-    # variable to keep track of current factor
+    - base case
+    - variable to keep track of total number of operations
+    - variable to keep track of current factor
 
-    # divide n by factor until n is divisible by factor
-    # add factor to operations
-    # divide n by factor
+    - divide n by factor until n is divisible by factor
+    - add factor to operations
+    - divide n by factor
 
-    # return the total number of operations
+    - return the total number of operations
     """
     if n <= 1:
         return 0
