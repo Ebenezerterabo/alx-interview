@@ -8,13 +8,15 @@ def read_line(line):
     Parses a line of input and returns the status code and file size.
     """
     pattern = r'''
-    ^((25[0-5]|2[0-4][0-9]|1[0-9]{2}|[1-9]?[0-9])\.)
-    {3}(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[1-9]?[0-9])\s-\s
-    \[\]\s"GET /projects/\d+ HTTP/1.1"\s(\d{3})\s(\d+)$
+    ^(\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3})\s-\s            # IP address
+    \[(.*?)\]\s                                        # Timestamp (non-greedy match)
+    "GET\s/[^"]*\sHTTP/1\.1"\s                        # Request (constant format)
+    (\d{3})\s                                          # Status code
+    (\d+)$                                            # File size
     '''
 
     # Check if the patterns matches the pattern
-    match = re.match(pattern, line.strip())
+    match = re.match(pattern, line.strip(), re.VERBOSE)
     # If the line matches extract the status code and file size
     if match:
         status_code = match.group(3)
@@ -32,7 +34,7 @@ def collect_data(status_code, file_size, stats):
     """
     # Update the total file size
     stats['total_file_size'] += file_size
-    # Update the count for the status code
+    #stats['status_codes'][status_code] = stats['status_codes'].get(status_code, 0) + 1
     if status_code in stats['status_codes']:
         stats['status_codes'][status_code] += 1
     else:
@@ -56,6 +58,7 @@ def display_statistics(statistics):
 
 
 def main():
+    """ Main function """
     # Initialize statistics dictionary
     statistics = {
         'total_file_size': 0,
@@ -70,7 +73,8 @@ def main():
                 break  # Exit the loop if no more input
 
             result = read_line(line)
-            if result is not None:
+
+            if result:
                 status_code, file_size = result
                 collect_data(status_code, file_size, statistics)
                 line_count += 1
