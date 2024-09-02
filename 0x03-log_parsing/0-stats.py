@@ -1,4 +1,6 @@
 #!/usr/bin/python3
+
+""" 0-stats module """
 import re
 import sys
 
