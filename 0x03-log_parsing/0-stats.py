@@ -10,11 +10,11 @@ def read_line(line):
     Parses a line of input and returns the status code and file size.
     """
     pattern = r'''
-    ^(\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3})\s-\s            # IP address
-    \[(.*?)\]\s                                        # Timestamp (non-greedy match)
-    "GET\s/[^"]*\sHTTP/1\.1"\s                        # Request (constant format)
-    (\d{3})\s                                          # Status code
-    (\d+)$                                            # File size
+    ^(\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3})\s-\s   # IP address
+    \[(.*?)\]\s                               # Timestamp (non-greedy match)
+    "GET\s/[^"]*\sHTTP/1\.1"\s                # Request (constant format)
+    (\d{3})\s                                 # Status code
+    (\d+)$                                    # File size
     '''
 
     # Check if the patterns matches the pattern
@@ -36,7 +36,8 @@ def collect_data(status_code, file_size, stats):
     """
     # Update the total file size
     stats['total_file_size'] += file_size
-    #stats['status_codes'][status_code] = stats['status_codes'].get(status_code, 0) + 1
+    # stats['status_codes'][status_code]
+    # = stats['status_codes'].get(status_code, 0) + 1
     if status_code in stats['status_codes']:
         stats['status_codes'][status_code] += 1
     else:
