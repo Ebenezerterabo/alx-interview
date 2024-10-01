@@ -85,9 +85,11 @@ def main():
             if line_count == 10:
                 display_statistics(statistics)
                 line_count = 0  # Reset after printing statistics
-        except KeyboardInterrupt:
+
+        except Exception as e:
+            pass
+        finally:
             display_statistics(statistics)
-            break
 
 
 if __name__ == "__main__":
