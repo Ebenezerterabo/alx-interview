@@ -1,4 +1,5 @@
 #!/usr/bin/python3
+""" Prime Game """
 
 
 def sieve_of_eratosthenes(n):
